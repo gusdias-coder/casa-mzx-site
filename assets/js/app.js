@@ -4,6 +4,7 @@ var SV=["Recuperação capilar","Mechas e loiros","Mega Hair","Corte e coloraç�
 var OB=["Recuperar a saúde dos fios","Mudar o visual","Manutenção do meu cabelo","Ocasião especial"];
 var PR=["Primeira vez na Casa MZX","Já sou cliente"];
 var MAPS="https://www.google.com/maps/search/?api=1&query=Sal%C3%A3o+de+Beleza+CASA+MZX+Rua+Nova+Jerusal%C3%A9m+78+S%C3%A3o+Paulo";
+var progress=document.createElement("div");progress.className="scroll-progress";progress.setAttribute("aria-hidden","true");document.body.prepend(progress);
 function h(d){var w=d.getDay();return w==0?[9,17]:w==1?[9,20]:[8,20]}
 function slots(d){var o=h(d),a=[],n=new Date();for(var i=o[0];i<o[1];i++){var t=new Date(d);t.setHours(i,0,0,0);if(t>new Date(n.getTime()+2*36e5))a.push(i)}return a}
 function ok(d){return slots(d).length>0}
@@ -38,7 +39,9 @@ document.querySelectorAll("[data-svc]").forEach(function(b){b.addEventListener("
 var bg=document.querySelector(".bg"),n=document.getElementById("menu");
 bg.addEventListener("click",function(){var o=n.classList.toggle("open");bg.setAttribute("aria-expanded",o)});
 n.addEventListener("click",function(e){if(e.target.tagName=="A"){n.classList.remove("open");bg.setAttribute("aria-expanded","false")}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&n.classList.contains("open")){n.classList.remove("open");bg.setAttribute("aria-expanded","false");bg.focus()}});
 document.getElementById("y").textContent=new Date().getFullYear();
+window.addEventListener("scroll",function(){var max=document.documentElement.scrollHeight-window.innerHeight;progress.style.transform="scaleX("+(max>0?window.scrollY/max:0)+")"},{passive:true});
 var rv=document.querySelectorAll(".rv");
 if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});rv.forEach(function(el){io.observe(el)})}else rv.forEach(function(el){el.classList.add("in")});
 draw();
